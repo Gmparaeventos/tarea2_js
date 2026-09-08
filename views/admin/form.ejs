@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title><%= usuario ? 'Editar' : 'Crear' %> perfil - Admin CloudProfiles</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="navbar">
+        <span class="brand">☁️ CloudProfiles - Admin</span>
+        <div><a href="/admin">← Volver a la tabla</a> <a href="/logout">Cerrar sesion</a></div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h1><%= usuario ? 'Editar perfil' : 'Crear nuevo perfil' %></h1>
+            <% if (mensaje) { %>
+                <div class="alerta alerta-<%= mensaje.tipo %>"><%= mensaje.texto %></div>
+            <% } %>
+
+            <form method="POST" action="<%= usuario ? '/admin/editar/' + usuario.id : '/admin/nuevo' %>" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label>Correo electronico</label>
+                    <input type="email" name="email" value="<%= usuario ? usuario.email : '' %>" required>
+                </div>
+                <div class="form-group">
+                    <label>Contraseña <%= usuario ? '(dejar en blanco para no cambiarla)' : '' %></label>
+                    <input type="password" name="password" <%= usuario ? '' : 'required' %>>
+                </div>
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <input type="text" name="nombre" value="<%= usuario ? usuario.nombre : '' %>">
+                </div>
+                <div class="form-group">
+                    <label>Apellido</label>
+                    <input type="text" name="apellido" value="<%= usuario ? usuario.apellido : '' %>">
+                </div>
+                <div class="form-group">
+                    <label>Telefono</label>
+                    <input type="tel" name="telefono" value="<%= usuario ? usuario.telefono : '' %>">
+                </div>
+                <div class="form-group">
+                    <label>Descripcion</label>
+                    <textarea name="descripcion"><%= usuario ? usuario.descripcion : '' %></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Rol</label>
+                    <select name="rol">
+                        <option value="usuario" <%= usuario && usuario.rol === 'usuario' ? 'selected' : '' %>>Usuario</option>
+                        <option value="admin" <%= usuario && usuario.rol === 'admin' ? 'selected' : '' %>>Admin</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Imagen de perfil</label>
+                    <input type="file" name="foto" accept="image/*">
+                </div>
+
+                <button type="submit" class="btn"><%= usuario ? 'Guardar cambios' : 'Crear perfil' %></button>
+                <a href="/admin" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro - CloudProfiles</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="navbar">
+        <span class="brand">☁️ CloudProfiles</span>
+        <div><a href="/login">Iniciar sesion</a></div>
+    </div>
+
+    <div class="container auth-box">
+        <div class="card">
+            <h1>Crear cuenta</h1>
+            <% if (mensaje) { %>
+                <div class="alerta alerta-<%= mensaje.tipo %>"><%= mensaje.texto %></div>
+            <% } %>
+            <form method="POST" action="/registro">
+                <div class="form-group">
+                    <label>Correo electronico</label>
+                    <input type="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label>Contraseña</label>
+                    <input type="password" name="password" minlength="6" required>
+                </div>
+                <div class="form-group">
+                    <label>Confirmar contraseña</label>
+                    <input type="password" name="confirmar_password" minlength="6" required>
+                </div>
+                <button type="submit" class="btn">Registrarme</button>
+            </form>
+            <p class="mt-16">¿Ya tienes cuenta? <a href="/login">Inicia sesion</a></p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi perfil - CloudProfiles</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="navbar">
+        <span class="brand">☁️ CloudProfiles</span>
+        <div>
+            Hola, <%= usuario.nombre || usuario.email %>
+            <a href="/logout">Cerrar sesion</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h1>Mi perfil</h1>
+            <% if (mensaje) { %>
+                <div class="alerta alerta-<%= mensaje.tipo %>"><%= mensaje.texto %></div>
+            <% } %>
+
+            <img src="<%= urlFoto %>" alt="Foto de perfil" class="avatar">
+
+            <form method="POST" action="/perfil" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label>Correo (no editable)</label>
+                    <input type="text" value="<%= usuario.email %>" disabled>
+                </div>
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <input type="text" name="nombre" value="<%= usuario.nombre %>">
+                </div>
+                <div class="form-group">
+                    <label>Apellido</label>
+                    <input type="text" name="apellido" value="<%= usuario.apellido %>">
+                </div>
+                <div class="form-group">
+                    <label>Telefono</label>
+                    <input type="tel" name="telefono" value="<%= usuario.telefono %>">
+                </div>
+                <div class="form-group">
+                    <label>Descripcion personal</label>
+                    <textarea name="descripcion"><%= usuario.descripcion %></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Cambiar imagen de perfil</label>
+                    <input type="file" name="foto" accept="image/*">
+                </div>
+                <button type="submit" class="btn">Guardar cambios</button>
+            </form>
+
+            <% if (usuario.foto_perfil) { %>
+            <form method="POST" action="/perfil/eliminar-foto" class="mt-16">
+                <button type="submit" class="btn btn-danger"
+                    onclick="return confirm('¿Eliminar la imagen de perfil?');">
+                    Eliminar imagen
+                </button>
+            </form>
+            <% } %>
+
+            <p class="mt-16" style="color:#666; font-size:13px;">
+                Miembro desde: <%= new Date(usuario.fecha_registro).toLocaleDateString('es-PE') %>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

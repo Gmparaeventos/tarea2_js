@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ver perfil - Admin CloudProfiles</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="navbar">
+        <span class="brand">☁️ CloudProfiles - Admin</span>
+        <div><a href="/admin">← Volver a la tabla</a> <a href="/logout">Cerrar sesion</a></div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h1>Detalle del perfil</h1>
+            <img src="<%= urlFoto %>" class="avatar" alt="Foto de perfil">
+
+            <table>
+                <tr><th>ID</th><td><%= usuario.id %></td></tr>
+                <tr><th>Nombre</th><td><%= usuario.nombre %></td></tr>
+                <tr><th>Apellido</th><td><%= usuario.apellido %></td></tr>
+                <tr><th>Correo</th><td><%= usuario.email %></td></tr>
+                <tr><th>Telefono</th><td><%= usuario.telefono %></td></tr>
+                <tr><th>Descripcion</th><td><%= usuario.descripcion %></td></tr>
+                <tr><th>Rol</th><td><%= usuario.rol %></td></tr>
+                <tr><th>Fecha de registro</th><td><%= usuario.fecha_registro %></td></tr>
+                <tr><th>Ultima actualizacion</th><td><%= usuario.fecha_actualizacion %></td></tr>
+            </table>
+
+            <div class="mt-16">
+                <a href="/admin/editar/<%= usuario.id %>" class="btn">Editar</a>
+                <a href="/admin" class="btn btn-secondary">Volver</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

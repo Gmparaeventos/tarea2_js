@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel Admin - CloudProfiles</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="navbar">
+        <span class="brand">☁️ CloudProfiles - Admin</span>
+        <div>
+            Hola, <%= usuarioSesion.nombre || 'Admin' %>
+            <a href="/logout">Cerrar sesion</a>
+        </div>
+    </div>
+
+    <div class="container" style="max-width:1100px;">
+        <div class="card">
+            <h1>Panel de administracion</h1>
+            <p style="color:#666; margin-bottom:16px;">Gestion completa (CRUD) de perfiles registrados.</p>
+            <% if (mensaje) { %>
+                <div class="alerta alerta-<%= mensaje.tipo %>"><%= mensaje.texto %></div>
+            <% } %>
+
+            <a href="/admin/nuevo" class="btn">+ Crear nuevo perfil</a>
+
+            <table class="mt-16">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Foto</th>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Telefono</th>
+                        <th>Rol</th>
+                        <th>Registro</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <% usuarios.forEach(u => { %>
+                    <tr>
+                        <td><%= u.id %></td>
+                        <td><%= u.foto_perfil ? '✅' : '—' %></td>
+                        <td><%= (u.nombre + ' ' + u.apellido).trim() || '—' %></td>
+                        <td><%= u.email %></td>
+                        <td><%= u.telefono || '—' %></td>
+                        <td><%= u.rol %></td>
+                        <td><%= new Date(u.fecha_registro).toLocaleDateString('es-PE') %></td>
+                        <td class="acciones">
+                            <a href="/admin/ver/<%= u.id %>" class="btn btn-secondary btn-small">Ver</a>
+                            <a href="/admin/editar/<%= u.id %>" class="btn btn-small">Editar</a>
+                            <% if (u.rol !== 'admin') { %>
+                            <form method="POST" action="/admin/eliminar/<%= u.id %>" style="display:inline;"
+                                  onsubmit="return confirm('¿Eliminar este perfil de forma permanente?');">
+                                <button type="submit" class="btn btn-danger btn-small">Eliminar</button>
+                            </form>
+                            <% } %>
+                        </td>
+                    </tr>
+                <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
